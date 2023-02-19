@@ -1,12 +1,16 @@
 const express = require("express")
+const pkg = require("./package.json")
 const port = 8080
-
-
 
 const server = express()
 
 server.get("/", (req, res) => {
-  res.send("Hello World!")
+  return res.status(200).json({
+    name : pkg.name,
+    author : pkg.author,
+    version : pkg.version,
+    description : pkg.description,
+  })  
 })
 
 server.listen(port, (err) => {
