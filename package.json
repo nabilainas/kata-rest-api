@@ -1,4 +1,9 @@
 {
+  "name": "rest-crm-api",
+  "author": "Nabil AÏNAS",
+  "version": "1.0.0",
+  "description": "API for a CRM app",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },
