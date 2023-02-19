@@ -1,8 +1,6 @@
 {
   "scripts": {
-    "lint:check": "prettier --check .",
-    "lint:fix": "prettier --write .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "express": "^4.18.2"
