@@ -1,6 +1,7 @@
 const express = require("express")
 const User = require("./User")
-
+const bcrypt = require("bcrypt")
+const salt = 10
 
 const router = express.Router()
 
@@ -29,18 +30,42 @@ router.get("/getbyid/:id", async (req, res) => {
 })
 
 router.post("/create", async (req, res) => {
-  const user = new User({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    role: req.body.role,
-    email: req.body.email,
-    password: req.body.password,
-  })
+  const emailFormat = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
   try {
-    const newUser = await user.save(req.body)
-    res.status(201).json({newUser, message: "Utilisateur créé avec succès"})
+    const password = await bcrypt.hashSync(req.body.password, salt)
+    const user = new User({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      role: req.body.role,
+      email: req.body.email,
+      password: password,
+    })
+    if (emailFormat.test(user.email)) {
+      const newUser = await user.save(req.body)
+      res.status(201).json({newUser, message: "Utilisateur créé avec succès"})
+    } else {
+      res.status(400).json({ message: "e-mail non valide" })
+    }
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la création de l'utilisateur" })
+  }
+})
+
+router.post("/login", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email })
+    if (user) {
+      const cmp = await bcrypt.compareSync(req.body.password, user.password)
+      if (cmp) {
+        res.status(200).json({ user, message: "Connexion réussie" })
+      }else{
+        res.status(401).json({ message: "Mot de passe ou e-mail incorrect" })
+      }
+    } else {
+      res.status(401).json({ message: "Mot de passe ou e-mail incorrect" })
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message })
   }
 })
 
