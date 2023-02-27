@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require("./database")  
 const pkg = require("./package.json")
 const port = 8080
-const userRoutes = require("./user.routes")
+const userRoutes = require("./routes/user.routes")
 
 const server = express()
 server.use(express.json())
