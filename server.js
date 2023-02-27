@@ -2,7 +2,6 @@ const express = require("express")
 const mongoose = require("./database")  
 const pkg = require("./package.json")
 const port = 8080
-const Role = require("./models/Role")
 const userRoutes = require("./user.routes")
 
 const server = express()
@@ -22,25 +21,6 @@ server.get("/", (req, res) => {
     version : pkg.version,
     description : pkg.description,
   })  
-})
-
-server.post("/createrole", (req, res) => {
-  const { name, permissions } = req.body
-  try {
-    const role = new Role({
-      name: name,
-      permissions: {
-        userPermission: permissions.userPermission,
-        pagePermission: permissions.pagePermission,
-        navigationMenuPermission: permissions.navigationMenuPermission,
-        formPermission: permissions.formPermission,
-      },
-    })
-    const newRole = role.save()
-    res.status(201).json({newRole, message: "Role créé avec succès"})
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
 })
 
 server.listen(port, (err) => {
