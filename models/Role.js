@@ -7,23 +7,79 @@ const roleSchema = new mongoose.Schema({
     default: "editor",
   },
   permissions: {
-    create: {
-      type: Boolean,
-      default: false,
+    userPermission : {
+      create: {
+        type: Boolean,
+        default: false,
+      },
+      read: {
+        type: Boolean,
+        default: false,
+      },
+      update: {
+        type: Boolean,
+        default: false,
+      },
+      delete: {
+        type: Boolean,
+        default: false,
+      },
     },
-    read: {
-      type: Boolean,
-      default: false,
+    pagePermission : {
+      create: {
+        type: Boolean,
+        default: false,
+      },
+      read: {
+        type: Boolean,
+        default: false,
+      },
+      update: {
+        type: Boolean,
+        default: false,
+      },
+      delete: {
+        type: Boolean,
+        default: false,
+      },
     },
-    update: {
-      type: Boolean,
-      default: false,
+    navigationMenuPermission : {
+      create: {
+        type: Boolean,
+        default: false,
+      },
+      read: {
+        type: Boolean,
+        default: false,
+      },
+      update: {
+        type: Boolean,
+        default: false,
+      },
+      delete: {
+        type: Boolean,
+        default: false,
+      },
     },
-    delete: {
-      type: Boolean,
-      default: false,
-    }
-  }
+    formPermission : {
+      create: {
+        type: Boolean,
+        default: false,
+      },
+      read: {
+        type: Boolean,
+        default: false,
+      },
+      update: {
+        type: Boolean,
+        default: false,
+      },
+      delete: {
+        type: Boolean,
+        default: false,
+      },
+    }, 
+  },
 })
 
 module.exports = mongoose.model("Roles", roleSchema)
